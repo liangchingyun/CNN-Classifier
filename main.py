@@ -38,7 +38,7 @@ transform = transforms.Compose([
 
 
 # load dataset
-dataset = torchvision.datasets.ImageFolder(root='/content/drive/MyDrive/Colab Notebooks/CNN_Classifier/dataset', transform=transform)
+dataset = torchvision.datasets.ImageFolder(root='dataset', transform=transform)
 
 
 # split dataset into train, val, test
@@ -70,16 +70,20 @@ class CNN(nn.Module):
             nn.ReLU(inplace=True),
             nn.Conv2d(256, 512, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),  # 新增的卷積層
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
         )
         self.classifier = nn.Sequential(
             nn.Dropout(),
-            nn.Linear(512 * 6 * 6, 4096),
+            nn.Linear(512 * 6 * 6, 8192),  # 增大全連接層
             nn.ReLU(inplace=True),
             nn.Dropout(),
-            nn.Linear(4096, 4096),
+            nn.Linear(8192, 4096),
             nn.ReLU(inplace=True),
-            nn.Linear(4096, 3),
+            nn.Linear(4096, 1024),  # 新增的全連接層
+            nn.ReLU(inplace=True),
+            nn.Linear(1024, 3),
         )
 
     def forward(self, x):
@@ -132,18 +136,22 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
         val_losses.append(val_loss)
         val_accuracies.append(val_acc)
 
-        print(f'Epoch {epoch+1}/{num_epochs}, Train Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.4f}, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}')
+        print(f'Epoch {epoch+1}/{num_epochs}, Train Loss: {epoch_loss:.4f}, \
+        Train Acc: {epoch_acc:.4f}, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}')
 
-        scheduler.step()
+        scheduler.step() # use learning rate scheduler
 
     return train_losses, train_accuracies, val_losses, val_accuracies
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
+
+# setup scheduler
+scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
 num_epochs = 50
 
-train_losses, train_accuracies, val_losses, val_accuracies = train_model(model, train_loader, val_loader, criterion, optimizer, scheduler, num_epochs)
+train_losses, train_accuracies, val_losses, val_accuracies = \
+train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs, scheduler)
 
 
 plt.figure(figsize=(12, 4))

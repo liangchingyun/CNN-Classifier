@@ -1,5 +1,3 @@
-markdown
-複製程式碼
 # CNN Classifier
 
 This project is a Convolutional Neural Network (CNN) classifier for images of cats, dogs, and pandas. The dataset is organized into the `dataset` directory, with three subdirectories: `cat`, `dog`, and `panda`, each containing 1000 images.
@@ -14,7 +12,7 @@ The dataset is split into training, validation, and test sets with the following
 
 ## Training and Evaluation
 
-We train the model for 50 epochs. At the end of each epoch, the following metrics are recorded and plotted:
+We train the model for 45 epochs. At the end of each epoch, the following metrics are recorded and plotted:
 
 - Training Loss
 - Validation Loss
@@ -36,3 +34,14 @@ Finally, we evaluate the model's performance using the Test Loss and Test Accura
     ```
     python main.py
     ```
+
+## Results and Analysis
+Training process metrics:
+
+![image](https://github.com/liangchingyun/img-folder/blob/main/CNN-Classifier_result.png)
+
+
+Final test results:
+
+Test Loss: 0.6178
+Test Accuracy: 71.78%
