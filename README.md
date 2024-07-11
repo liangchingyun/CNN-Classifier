@@ -41,7 +41,6 @@ Training process metrics:
 ![image](https://github.com/liangchingyun/img-folder/blob/main/CNN-Classifier_result.png)
 
 
-Final test results:
-
-Test Loss: 0.6178
+Final test results:\
+Test Loss: 0.6178\
 Test Accuracy: 71.78%
