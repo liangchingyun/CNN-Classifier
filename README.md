@@ -12,7 +12,7 @@ The dataset is split into training, validation, and test sets with the following
 
 ## Training and Evaluation
 
-We train the model for 45 epochs. At the end of each epoch, the following metrics are recorded and plotted:
+I train the model for 45 epochs. At the end of each epoch, the following metrics are recorded and plotted:
 
 - Training Loss
 - Validation Loss
@@ -21,7 +21,7 @@ We train the model for 45 epochs. At the end of each epoch, the following metric
 
 These metrics, plotted against the number of epochs, help us observe and judge the training performance of the model.
 
-Finally, we evaluate the model's performance using the Test Loss and Test Accuracy.
+Finally, I evaluate the model's performance using the Test Loss and Test Accuracy.
 
 ## Usage
 
